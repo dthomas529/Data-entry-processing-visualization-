@@ -1,3 +1,4 @@
+import openpyxl
 import pandas as pd
 
 # Load the Excel file
@@ -15,6 +16,24 @@ data.rename(columns={"Full Name": "Contact Name"}, inplace=True)
 # Example 2: Fill missing values
 data.fillna(value={"Contact Name": 0, "Company Name": 0, "Email Address": 0, "Website URL": 0, "City": 0, "State": 0, "Zip Code": 0}, inplace=True)  # Replace nulls with 0 in a specific column
 
+data.rename(columns={"Company Name": "A"}, inplace=True)
+
+#Specify the column to analyze (e.g., column "A")
+column_letter = "A"  # Replace with your desired column letter
+column_index = openpyxl.utils.column_index_from_string(column_letter)
+
+# Count non-empty entries in the specified column
+entry_count = 0
+for row in range(1, data.max_row + 1):
+    if data.cell(row=row, column=column_index).value:
+        entry_count += 1
+
+# Write the result in the next empty cell of the column
+next_row = entry_count + 1
+data.cell(row=next_row, column=column_index, value=entry_count)
+
+data.rename(columns={"A": "Company Name"}, inplace=True)
+
 # Example 3: Add a calculated column
 #data["NewCalculatedColumn"] = data["ColumnA"] * data["ColumnB"]  # Example calculation
 
@@ -22,10 +41,10 @@ data.fillna(value={"Contact Name": 0, "Company Name": 0, "Email Address": 0, "We
 #data_filtered = data[data["ColumnName"] > 10]  # Keep rows where values in 'ColumnName' > 10
 
 # Example 5: Drop unnecessary columns
-data_filtered = data_filtered.drop(columns=["Today's Date"])
+#data_filtered = data_filtered.drop(columns=["Today's Date"])
 
 # Save the transformed data back to Excel
 output_file_path = "transformed_data.xlsx"
-data_filtered.to_excel(output_file_path, index=False)
+data.to_excel(output_file_path, index=False)
 
 print(f"Transformed data has been saved to {output_file_path}")
