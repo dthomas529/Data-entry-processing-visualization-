@@ -1,0 +1,31 @@
+import pandas as pd
+
+# Load the Excel file
+file_path = "B2B Email Marketing List.xlsx"  # Replace with your Excel file path
+data = pd.read_excel(file_path, sheet_name="2024")  # Specify the sheet name
+
+# Display the first few rows of the data
+print("Original Data:")
+print(data.head())
+
+# Perform data transformations
+# Example 1: Rename columns
+data.rename(columns={"Full Name": "Contact Name"}, inplace=True)
+
+# Example 2: Fill missing values
+data.fillna(value={"Contact Name": 0, "Company Name": 0, "Email Address": 0, "Website URL": 0, "City": 0, "State": 0, "Zip Code": 0}, inplace=True)  # Replace nulls with 0 in a specific column
+
+# Example 3: Add a calculated column
+#data["NewCalculatedColumn"] = data["ColumnA"] * data["ColumnB"]  # Example calculation
+
+# Example 4: Filter rows
+#data_filtered = data[data["ColumnName"] > 10]  # Keep rows where values in 'ColumnName' > 10
+
+# Example 5: Drop unnecessary columns
+data_filtered = data_filtered.drop(columns=["Today's Date"])
+
+# Save the transformed data back to Excel
+output_file_path = "transformed_data.xlsx"
+data_filtered.to_excel(output_file_path, index=False)
+
+print(f"Transformed data has been saved to {output_file_path}")
