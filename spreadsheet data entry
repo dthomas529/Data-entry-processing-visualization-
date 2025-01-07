@@ -9,6 +9,21 @@ data = pd.read_excel(file_path, sheet_name="2024")  # Specify the sheet name
 print("Original Data:")
 print(data.head())
 
+#Load dataset
+df = pd.read_('filename')
+
+#Display first 5 rows
+df.head()
+
+
+df.info()
+
+df.shape()
+
+#Converting datatypes
+df['Column Name'] = df['Column'].astype('str)
+df.dtypes
+
 # Perform data transformations
 # Example 1: Rename columns
 data.rename(columns={"Full Name": "Contact Name"}, inplace=True)
